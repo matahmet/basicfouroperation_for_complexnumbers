@@ -1,0 +1,194 @@
+#include <iostream>
+#include<stdlib.h>
+#include<string.h>
+#include <time.h>
+#include <math.h>
+
+
+using namespace std;
+
+class complex
+{
+
+
+
+public:
+	float real, img;
+
+
+
+	// Addition Operation for Complex numbers :
+	complex operator+(complex z) {
+		complex result;
+		result.real = this->real + z.real;
+		result.img = this->img + z.img;
+		return result;
+	}
+
+	// Subtraction Operation for Complex numbers :
+	complex operator-(complex z) {
+		complex result;
+		result.real = this->real - z.real;
+		result.img = this->img - z.img;
+		return result;
+	}
+
+	// Multiplication Operation for Complex numbers :
+	complex operator*(complex z) {
+		complex result;
+		result.real = this->real * z.real - this->img *z.img;
+		result.img = this->real * z.img + this->img*z.real;
+		return result;
+	}
+
+	// Multiplication Operation for Complex and float number but you should multiplicate float number after complex number for example (7.3-2.4i)*3.2 :
+
+	complex operator*(float alpha) {
+		complex result;
+		result.real = this->real * alpha;
+		result.img = this->img* alpha;
+		return result;
+	}
+
+
+	// Division Operation for Complex numbers :
+	complex operator/(complex z) {
+		if (z.img*z.img + z.real*z.real == 0) {
+			cout << " thou shalt not divide by zero !!! never ever !!! result is invalid !!! ";
+			return z;
+		}
+		else {
+			complex result;
+
+
+			result.real = (this->real * z.real + this->img *z.img) / (z.img*z.img + z.real*z.real);
+
+			result.img = (this->img * z.real - this->real *z.img) / (z.img*z.img + z.real*z.real);
+
+			return result;
+
+		}
+
+
+	}
+
+	
+
+};
+
+//Display function for complex numbers
+
+void complexdisplay(complex z) {
+	if (z.img >= 0) { cout << "number = " << z.real << " + " << z.img << "i" << endl; }
+	else { cout << "number = " << z.real << " - " << -z.img << "i" << endl; }
+
+}
+
+//Display result function for complex numbers
+void resultdisplay(complex z) {
+	if (z.img >= 0) { cout << "result = " << z.real << " + " << z.img << "i" << endl; }
+	else { cout << "result = " << z.real << " - " << -z.img << "i" << endl; }
+
+}
+
+
+//Float Rand Function Between -100 and 100 designed for generating unique values corresponding to seed values and time
+
+
+float frand(int n) {
+
+	time_t t;
+
+	srand((unsigned)(time(&t) + n));
+
+	return -100 + static_cast <float> (rand() % 200) + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX));
+};
+
+
+int main()
+{
+	complex z, w;
+	complex Addition, Subtraction, Multiplication, Division;
+	char response;
+
+
+
+
+
+	cout << "Would you like to initialize complex numbers randomly ?" << endl;
+	cout << "\n";
+	cout << "If your answer is Yes, press y " << endl;
+	cout << "Otherwise you should initialize complex numbers manually by pressing any letter or number " << endl;
+	cin >> response;
+
+
+
+
+	if (response == 'y') {
+
+		// Do not forget !!! different seeds generates different random values
+
+		z.real = frand(-100000);
+		z.img = frand(720);
+		w.real = frand(-4000);
+		w.img = frand(15);
+
+	}
+	else {
+		cout << "Enter real and imaginary parts of complex number-z." << endl;
+		cout << "\n real part of complex number-z =";
+		cin >> z.real;
+		cout << "imaginary part of complex number-z =";
+		cin >> z.img;
+		cout << "Enter real and imaginary part of complex number-w." << endl;
+		cout << "\n real part of complex number-w =";
+		cin >> w.real;
+		cout << "imaginary part of complex number-w =";
+		cin >> w.img;
+	}
+	
+	
+    cout << "\n";
+	cout << "z-number:" << endl;
+	complexdisplay(z);
+	cout << "\n";
+
+	cout << "w-number:" << endl;
+	complexdisplay(w);
+	cout << "\n";
+
+	Addition = z + w;
+	cout << "Addition of these two complex numbers (z+w) : " << endl;
+	resultdisplay(Addition);
+	cout << "\n";
+
+
+	Subtraction = z - w;
+	cout << "Subtraction of these two complex numbers (z-w) : " << endl;
+	resultdisplay(Subtraction);
+	cout << "\n";
+
+
+	Multiplication = z*w;
+	cout << "Multiplication of these two complex numbers (z*w) : " << endl;
+	resultdisplay(Multiplication);
+	cout << "\n";
+
+
+	Division = z / w;
+	cout << "Division of these two complex numbers (z/w): " << endl;
+	resultdisplay(Division);
+	cout << "\n";
+
+	cout << "Multiplication Operation for Complex and float number z*(3.14) : " << endl;
+	resultdisplay(z*3.14);
+	cout << "\n";
+
+	//Meanwhile we happen to construct a linear space (Complex Numbers) over a field (Rational Numbers, in other words float)
+
+	// I hope you enjoy :)
+
+	system("pause");
+
+	return 0;
+}
